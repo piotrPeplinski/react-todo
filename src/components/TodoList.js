@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import TodoItem from "./TodoItem";
+import TodoInput from "./TodoInput";
 
 const TodoList = () => {
   const [tasks, setTasks] = useState([
@@ -21,18 +22,20 @@ const TodoList = () => {
       text,
       completed: false,
     };
-    // setTasks([tasks, newTask]);
-    // setText("");
     setTasks([...tasks, newTask]);
   };
 
   return (
     <div>
-      {tasks.map((task) => (
-        <TodoItem key={task.id} task={task} />
-      ))}
+        <TodoInput addTask={addTask}/>
+      <ul>
+        {tasks.map((task) => (
+          <li>
+            <TodoItem key={task.id} task={task} />
+          </li>
+        ))}
+      </ul>
     </div>
-    
   );
 };
 export default TodoList;
