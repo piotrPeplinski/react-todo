@@ -25,16 +25,44 @@ const TodoList = () => {
     setTasks([...tasks, newTask]);
   };
 
+  const changeStatus = (id) => {
+    setTasks(
+      tasks.map((task) => {
+        if (task.id === id) {
+          return { ...task, completed: !task.completed };
+        } else {
+          return task;
+        }
+      })
+    );
+  };
+
+  const deleteTask = id => {
+    setTasks(tasks.filter(task => task.id !== id))
+  }
+
   return (
     <div>
-        <TodoInput addTask={addTask}/>
+      <TodoInput addTask={addTask} />
+      <h3>Todo</h3>
       <ul>
         {tasks.map((task) => (
           <li>
-            <TodoItem key={task.id} task={task} />
+            {task.completed ? (
+              <TodoItem key={task.id} task={task} changeStatus={changeStatus} deleteTask={deleteTask}/>
+            ) : null}
           </li>
         ))}
       </ul>
+      <h3>Completed</h3>
+      <ul>
+      {tasks.map((task) => (
+          <li>
+            {task.completed ? (
+              null
+            ) : <TodoItem key={task.id} task={task} changeStatus={changeStatus} />}
+          </li>
+        ))}</ul>
     </div>
   );
 };
